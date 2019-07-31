@@ -1,7 +1,9 @@
 <template>
   <div>
+    <Header/>
     <!-- nuxt组件占位符 -->
     <nuxt />
+    <Footer/>>
   </div>
 </template>
 
