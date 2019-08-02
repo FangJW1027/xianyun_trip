@@ -61,17 +61,28 @@ methods:{
             console.log(vaild)
 
             if(vaild){
-                // 提交登录接口
-                this.$axios({
-                    url:'/accounts/login',
-                    method:'POST',
-                    data:this.form
-                }).then(res=>{
+                // // 提交登录接口
+                // this.$axios({
+                //     url:'/accounts/login',
+                //     method:'POST',
+                //     data:this.form
+                // }).then(res=>{
 
-                    this.$store.commit("user/setUserInfo",res.data)
+                //     this.$store.commit("user/setUserInfo",res.data)
 
+                //     // 跳转到首页
+                //     this.$router.push("/")
+                // })
+                  this.$store.dispatch("user/login", this.form).then(res => {
+                    // 成功提示
+                    this.$message({
+                        message: "登录成功，正在跳转",
+                        type: "success"
+                    });
                     // 跳转到首页
-                    this.$router.push("/")
+                    setTimeout(() => {
+                        this.$router.replace("/")
+                    }, 1000);
                 })
             }
         })

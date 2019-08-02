@@ -17,28 +17,32 @@
               </el-row>
             
             <!-- 登录注册 -->
-            <div v-if="false">
-              <nuxt-link to="/user/login">登录注册</nuxt-link>
-            </div>
+            <div v-if="!$store.state.user.userInfo.token">
+                    <!-- <router-link to="/"></router-link>     -->
+                    <nuxt-link to="/user/login">登录注册</nuxt-link>    
+                </div>
+                <!-- 登录之后的布局 -->
+                <div v-else>
 
-            <!-- 登录之后的布局-->
-            <div v-else>
-              <el-dropdown>
+                    <el-dropdown>
 
                         <span class="el-dropdown-link">
                             <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" alt="">
-                            超级棒棒糖
+                            {{$store.state.user.userInfo.user.nickname}}
                             <i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
 
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>个人中心</el-dropdown-item>
-                            <el-dropdown-item>退出</el-dropdown-item>
+                            <el-dropdown-item  @click.native="handleLogout">
+                                 退出
+                            </el-dropdown-item>
                         </el-dropdown-menu>
-                    </el-dropdown>  
+                    </el-dropdown>
+                </div>
 
-            </div>
-          </el-row>
+            </el-row>
+
 
         </div>
     </div>
@@ -46,7 +50,22 @@
 
 <script>
 export default {
+    mounted(){
 
+    },
+
+     methods: {
+        // 用户退出
+        handleLogout(){
+            const {commit} = this.$store;
+            commit("user/cleanUserInfo");
+            
+            this.$message({
+                message: "退出成功",
+                type: "success"
+            })
+        },
+    }
 }
 </script>
 
